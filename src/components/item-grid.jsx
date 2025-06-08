@@ -9,7 +9,9 @@ export function ItemGrid({ items, onProfilePage }) {
           title={item.title}
           description={item.description}
           price={item.price}
+          category={item.category}
           imagePath={item.imagePath}
+          author={item.author}
           isLiked={item.isLiked}
           onProfilePage={onProfilePage}
         />

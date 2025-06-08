@@ -1,11 +1,14 @@
 import { Heart } from "lucide-react";
 import { useState } from "react";
+import ItemDialog from "./item-card";
 
 export function Announcement({
   title,
   description,
   price,
   imagePath,
+  category,
+  author,
   isLiked,
   onProfilePage,
 }) {
@@ -17,17 +20,18 @@ export function Announcement({
         src={imagePath}
         alt="Announcement"
         style={{
-          justifySelf: "center",
-          borderRadius: "0.5em",
-          width: "100%",
-          height: "250px",
-          objectFit: "cover",
-          objectPosition: "center",
           marginBottom: "0.75em",
         }}
       />
       <div style={{ marginLeft: "0.25em" }}>
-        <p style={{ margin: "0", fontSize: "1.15em" }}>{title}</p>
+        <ItemDialog
+          title={title}
+          description={description}
+          price={price}
+          category={category}
+          image={imagePath}
+          author={author}
+        />
         <p
           style={{
             color: "var(--text-color-secondary)",

@@ -1,7 +1,22 @@
 import { Header } from "../components/header";
 import React from "react";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import MenuItem from "@mui/material/MenuItem";
 
 export default function CreateItem() {
+  const categories = [
+    "Technology",
+    "Clothing",
+    "Accessories",
+    "Home",
+    "Beauty",
+    "Sports",
+    "Toys",
+    "Health",
+    "Books",
+  ].sort();
+
   return (
     <div>
       <Header />
@@ -30,23 +45,22 @@ export default function CreateItem() {
           >
             {/* Campo Titolo */}
             <div className="form-group">
-              <label htmlFor="title">Article Name</label>
-              <input
-                type="text"
-                id="title"
-                name="title"
-                placeholder="es. Shirt"
+              <TextField
+                id="name"
+                label="Item Name"
+                variant="outlined"
+                slotProps={{ htmlInput: { type: "text" } }}
               />
             </div>
             {/* Campo Descrizione */}
             <div className="form-group">
-              <label htmlFor="description">Description</label>
               <textarea
                 type="text"
                 id="description"
                 name="description"
                 placeholder="es. A nice shirt to go partying..."
                 style={{
+                  resize: "vertical",
                   height: "8em",
                 }}
                 maxLength={100}
@@ -54,36 +68,37 @@ export default function CreateItem() {
             </div>
             {/* Campo Prezzo */}
             <div className="form-group">
-              <label htmlFor="price">Price</label>
-              <input
-                type="number"
+              <TextField
                 id="price"
-                name="price"
-                placeholder="€ EUR"
+                label="Price (€)"
+                variant="outlined"
+                slotProps={{ htmlInput: { type: "number", min: "1" } }}
               />
             </div>
             {/* Campo Immagine */}
             <div className="form-group">
-              <label htmlFor="image">Image</label>
-              <input
-                type="url"
+              <TextField
                 id="image"
-                name="image"
-                placeholder="es. https://nice.image.com"
+                label="Image URL"
+                variant="outlined"
+                slotProps={{ htmlInput: { type: "url" } }}
               />
             </div>
             {/* Campo Categoria */}
             <div className="form-group">
-              <label htmlFor="category">Category</label>
-              <select className="form-select" placeholder="Select a category">
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </select>
+              <TextField id="category" select label="Category">
+                {categories.map((option) => (
+                  <MenuItem key={option} value={option}>
+                    {option}
+                  </MenuItem>
+                ))}
+              </TextField>
             </div>
             {/* Bottone */}
             <div style={{ display: "flex", justifyContent: "flex-end" }}>
-              <button type="submit">Post</button>
+              <Button variant="contained" type="submit">
+                Contained
+              </Button>
             </div>
           </form>
         </div>

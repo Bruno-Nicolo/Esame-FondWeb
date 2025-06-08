@@ -12,96 +12,11 @@ export function Profile() {
       imagePath:
         "https://clinicalaveterinaria.it/wp-content/uploads/2023/11/giornata-gatti-nero.jpg",
       isLiked: false,
-    },
-    {
-      id: 2,
-      title: "Pants",
-      description: "A nice pants to go partying...",
-      price: 20,
-      imagePath:
-        "https://clinicalaveterinaria.it/wp-content/uploads/2023/11/giornata-gatti-nero.jpg",
-      isLiked: false,
-    },
-    {
-      id: 3,
-      title: "Shoes",
-      description: "A nice shoes to go partying...",
-      price: 30,
-      imagePath:
-        "https://clinicalaveterinaria.it/wp-content/uploads/2023/11/giornata-gatti-nero.jpg",
-      isLiked: false,
-    },
-    {
-      id: 3,
-      title: "Shoes",
-      description: "A nice shoes to go partying...",
-      price: 30,
-      imagePath:
-        "https://clinicalaveterinaria.it/wp-content/uploads/2023/11/giornata-gatti-nero.jpg",
-      isLiked: false,
-    },
-    {
-      id: 3,
-      title: "Shoes",
-      description: "A nice shoes to go partying...",
-      price: 30,
-      imagePath:
-        "https://clinicalaveterinaria.it/wp-content/uploads/2023/11/giornata-gatti-nero.jpg",
-      isLiked: false,
-    },
-    {
-      id: 3,
-      title: "Shoes",
-      description: "A nice shoes to go partying...",
-      price: 30,
-      imagePath:
-        "https://clinicalaveterinaria.it/wp-content/uploads/2023/11/giornata-gatti-nero.jpg",
-      isLiked: false,
-    },
-    {
-      id: 3,
-      title: "Shoes",
-      description: "A nice shoes to go partying...",
-      price: 30,
-      imagePath:
-        "https://clinicalaveterinaria.it/wp-content/uploads/2023/11/giornata-gatti-nero.jpg",
-      isLiked: false,
-    },
-    {
-      id: 3,
-      title: "Shoes",
-      description: "A nice shoes to go partying...",
-      price: 30,
-      imagePath:
-        "https://clinicalaveterinaria.it/wp-content/uploads/2023/11/giornata-gatti-nero.jpg",
-      isLiked: false,
-    },
-    {
-      id: 3,
-      title: "Shoes",
-      description: "A nice shoes to go partying...",
-      price: 30,
-      imagePath:
-        "https://clinicalaveterinaria.it/wp-content/uploads/2023/11/giornata-gatti-nero.jpg",
-      isLiked: false,
-    },
-    {
-      id: 3,
-      title: "Shoes",
-      description: "A nice shoes to go partying...",
-      price: 30,
-      imagePath:
-        "https://clinicalaveterinaria.it/wp-content/uploads/2023/11/giornata-gatti-nero.jpg",
-      isLiked: false,
-    },
-    {
-      id: 3,
-      title: "Shoes",
-      description: "A nice shoes to go partying...",
-      price: 30,
-      imagePath:
-        "https://clinicalaveterinaria.it/wp-content/uploads/2023/11/giornata-gatti-nero.jpg",
-      isLiked: false,
+      author: {
+        name: "John Doe",
+        image:
+          "https://plus.unsplash.com/premium_photo-1664536392896-cd1743f9c02c?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHBlcnNvbnxlbnwwfHwwfHx8MA%3D%3D",
+      },
     },
   ];
 
