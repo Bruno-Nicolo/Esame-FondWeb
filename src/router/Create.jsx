@@ -16,6 +16,7 @@ export default function CreateItem() {
           style={{
             width: "30%",
             backgroundColor: "var(--text-foreground)",
+            boxShadow: "0 0 10px 0 rgba(0, 0, 0, 0.1)",
             borderRadius: "0.5em",
             padding: "2em",
           }}
@@ -30,28 +31,51 @@ export default function CreateItem() {
             {/* Campo Titolo */}
             <div className="form-group">
               <label htmlFor="title">Article Name</label>
-              <input type="text" id="title" name="title" />
+              <input
+                type="text"
+                id="title"
+                name="title"
+                placeholder="es. Shirt"
+              />
             </div>
             {/* Campo Descrizione */}
             <div className="form-group">
               <label htmlFor="description">Description</label>
-              <input type="text" id="description" name="description" />
+              <textarea
+                type="text"
+                id="description"
+                name="description"
+                placeholder="es. A nice shirt to go partying..."
+                style={{
+                  height: "8em",
+                }}
+                maxLength={100}
+              />
             </div>
             {/* Campo Prezzo */}
             <div className="form-group">
               <label htmlFor="price">Price</label>
-              <input type="number" id="price" name="price" />
+              <input
+                type="number"
+                id="price"
+                name="price"
+                placeholder="€ EUR"
+              />
             </div>
             {/* Campo Immagine */}
             <div className="form-group">
               <label htmlFor="image">Image</label>
-              <input type="file" id="image" name="image" accept="image/*" />
+              <input
+                type="url"
+                id="image"
+                name="image"
+                placeholder="es. https://nice.image.com"
+              />
             </div>
             {/* Campo Categoria */}
             <div className="form-group">
               <label htmlFor="category">Category</label>
-              <select class="form-select" aria-label="Default select example">
-                <option selected>Open this select menu</option>
+              <select className="form-select" placeholder="Select a category">
                 <option value="1">One</option>
                 <option value="2">Two</option>
                 <option value="3">Three</option>

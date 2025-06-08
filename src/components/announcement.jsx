@@ -1,8 +1,15 @@
 import { Heart } from "lucide-react";
 import { useState } from "react";
 
-export function Announcement({ title, description, price, imagePath }) {
-  const [isLiked, setIsLiked] = useState(false);
+export function Announcement({
+  title,
+  description,
+  price,
+  imagePath,
+  isLiked,
+  onProfilePage,
+}) {
+  const [isLikedState, setIsLiked] = useState(isLiked);
 
   return (
     <div className="announcement" style={{ position: "relative" }}>
@@ -25,30 +32,37 @@ export function Announcement({ title, description, price, imagePath }) {
           style={{
             color: "var(--text-color-secondary)",
             margin: "0.2em",
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            maxWidth: "100%",
           }}
+          title={description}
         >
-          {description}
+          <span>{description}</span>
         </p>
         <h2 style={{ fontWeight: "bold", fontSize: "1.15em" }}>€{price}</h2>
-        {!isLiked ? (
-          // Cuore vuoto
-          <Heart
-            className="heart-icon"
-            onClick={() => {
-              setIsLiked(true);
-            }}
-          />
-        ) : (
-          // Cuore pieno
-          <Heart
-            className="heart-icon"
-            fill={"var(--secondary-color)"}
-            stroke={"var(--secondary-color)"}
-            onClick={() => {
-              setIsLiked(false);
-            }}
-          />
-        )}
+
+        {!onProfilePage &&
+          (!isLikedState ? (
+            // Cuore vuoto
+            <Heart
+              className="heart-icon"
+              onClick={() => {
+                setIsLiked(true);
+              }}
+            />
+          ) : (
+            // Cuore pieno
+            <Heart
+              className="heart-icon"
+              fill={"var(--secondary-color)"}
+              stroke={"var(--secondary-color)"}
+              onClick={() => {
+                setIsLiked(false);
+              }}
+            />
+          ))}
       </div>
     </div>
   );

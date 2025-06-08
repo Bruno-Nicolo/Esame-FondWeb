@@ -5,6 +5,8 @@ import HomePage from "./router/HomePage.jsx";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import CreateItem from "./router/Create.jsx";
+import Favourites from "./router/Favourite.jsx";
+import { Profile } from "./router/Profile.jsx";
 
 const router = createBrowserRouter([
   {
@@ -15,10 +17,18 @@ const router = createBrowserRouter([
     path: "/create",
     element: <CreateItem />,
   },
+  {
+    path: "/favourites",
+    element: <Favourites />,
+  },
+  {
+    path: "/profile",
+    element: <Profile />,
+  },
 ]);
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
-    <RouterProvider router={router} />
-  </StrictMode>
+  // <StrictMode>
+  <RouterProvider router={router} />
+  // </StrictMode>
 );

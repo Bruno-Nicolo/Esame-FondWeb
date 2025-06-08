@@ -18,8 +18,8 @@ export function Header() {
         <CirclePlus />
       </div>
       <div>
-        <Link to="/favorites">
-          <p>Favorites</p>
+        <Link to="/favourites">
+          <p>Favourites</p>
         </Link>
         <Heart />
       </div>

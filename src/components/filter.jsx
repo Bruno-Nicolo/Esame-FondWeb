@@ -1,5 +1,6 @@
+import { useState } from "react";
+
 export function Filter() {
-  // Ecommerce Categories
   const categories = [
     "Technology",
     "Clothing",
@@ -12,12 +13,35 @@ export function Filter() {
     "Books",
   ].sort();
 
+  // Stato per la categoria selezinata
+  const [selectedCategory, setSelectedCategory] = useState("All categories");
+
   return (
     <div className="filter">
-      <p>All categories</p>
+      <FilterItem
+        categoria="All categories"
+        isSelected={selectedCategory === "All categories"}
+        onSelect={() => setSelectedCategory("All categories")}
+      />
+
       {categories.map((categoria, index) => {
-        return <p key={index}>{categoria}</p>;
+        return (
+          <FilterItem
+            key={index}
+            categoria={categoria}
+            isSelected={selectedCategory === categoria}
+            onSelect={() => setSelectedCategory(categoria)}
+          />
+        );
       })}
     </div>
+  );
+}
+
+function FilterItem({ categoria, isSelected, onSelect }) {
+  return (
+    <p onClick={onSelect} className={isSelected ? "selected" : ""}>
+      {categoria}
+    </p>
   );
 }
