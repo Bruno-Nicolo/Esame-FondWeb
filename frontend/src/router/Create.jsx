@@ -49,7 +49,9 @@ export default function CreateItem() {
                 id="name"
                 label="Item Name"
                 variant="outlined"
-                slotProps={{ htmlInput: { type: "text" } }}
+                slotProps={{
+                  htmlInput: { type: "text" },
+                }}
               />
             </div>
             {/* Campo Descrizione */}
@@ -59,10 +61,6 @@ export default function CreateItem() {
                 id="description"
                 name="description"
                 placeholder="es. A nice shirt to go partying..."
-                style={{
-                  resize: "vertical",
-                  height: "8em",
-                }}
                 maxLength={100}
               />
             </div>
@@ -97,7 +95,7 @@ export default function CreateItem() {
             {/* Bottone */}
             <div style={{ display: "flex", justifyContent: "flex-end" }}>
               <Button variant="contained" type="submit">
-                Contained
+                Post
               </Button>
             </div>
           </form>

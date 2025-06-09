@@ -2,7 +2,8 @@ import * as React from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import Chip from "@mui/material/Chip";
-import Avatar from "@mui/material/Avatar";
+import { SendIcon } from "lucide-react";
+import Button from "@mui/material/Button";
 
 export default function ItemDialog({
   title,
@@ -13,6 +14,7 @@ export default function ItemDialog({
   image,
 }) {
   const [open, setOpen] = React.useState(false);
+  const [email, setEmail] = React.useState("");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -62,6 +64,28 @@ export default function ItemDialog({
               <div style={{ flexGrow: 4 / 5 }}>
                 <h3>{author.name}</h3>
               </div>
+            </div>
+
+            <div style={{ marginTop: "2em" }}>
+              <label>
+                <b>Contact {author.name}:</b>
+              </label>
+              <textarea
+                placeholder="Send a message via email..."
+                style={{ marginBottom: "0.5em" }}
+                value={email}
+                onChange={(evento) => setEmail(evento.target.value)}
+              />
+              <Button
+                variant="contained"
+                onClick={() => {
+                  console.log("Email: ", email);
+                  console.log("Email inviata");
+                }}
+                endIcon={<SendIcon size={18} />}
+              >
+                Send
+              </Button>
             </div>
           </div>
         </DialogContent>
