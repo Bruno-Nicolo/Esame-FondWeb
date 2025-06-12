@@ -1,0 +1,75 @@
+const mongoose = require("mongoose");
+const Item = require("../models/items");
+
+// get /:id/homepage?category=qualcosa
+exports.getHomePageItems = async (request, response) => {
+  try {
+    const userId = request.params.id;
+    const queryCategory = request.query.category;
+    if (queryCategory) {
+      const retrievedItems = await Item.find({
+        category: queryCategory,
+        author: { $ne: userId },
+      });
+      response.status(200).json(retrievedItems);
+    } else {
+      const allItems = await Item.find({ author: { $ne: userId } });
+      response.status(200).json(allItems);
+    }
+  } catch {
+    response.status(500).send("Error retrieving items");
+  }
+};
+
+// post /:userId/:itemId/addToFavorite per aggiungere a preferiti
+exports.addToFavorites = async (request, response) => {
+  try {
+    const itemId = request.params.itemId;
+    const userId = request.params.userId;
+    const retrievedItem = await Item.findById(itemId);
+    retrievedItem.likedBy.push(userId);
+    await retrievedItem.save();
+    response.status(200).send("Item added to favorites");
+  } catch {
+    response.status(500).send("Error adding item to favorites");
+  }
+};
+
+// post /:userId/:itemId/removeFromFavorite per rimuovere da preferiti
+exports.removeFromFavorites = async (request, response) => {
+  try {
+    const itemId = request.params.itemId;
+    const userId = request.params.userId;
+    const retrievedItem = await Item.findById(itemId);
+    // Rimuovi l'utente in posizione "index"
+    const index = retrievedItem.likedBy.indexOf(userId);
+    retrievedItem.likedBy.splice(index, 1);
+    await retrievedItem.save();
+    response.status(200).send("Item removed from favorites");
+  } catch {
+    response.status(500).send("Error removing item from favorites");
+  }
+};
+
+// post per aggiungere item
+exports.addItem = async (request, response) => {
+  try {
+    const newItem = request.body;
+    await Item.create(newItem);
+    response.status(200).send("Item added successfully");
+  } catch (error) {
+    response.status(500).send(error);
+  }
+};
+
+// post per rimuovere /delete/:itemId
+exports.deleteItem = async (request, response) => {
+  try {
+    const itemId = request.params.itemId;
+    const retrievedItem = await Item.findById(itemId);
+    await retrievedItem.deleteOne();
+    response.status(200).send("Item deleted successfully");
+  } catch (error) {
+    response.status(500).send(error);
+  }
+};
