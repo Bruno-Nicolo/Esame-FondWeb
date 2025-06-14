@@ -1,63 +1,56 @@
+import { useEffect, useState } from "react";
 import { Header } from "../components/header";
 import { ItemGrid } from "../components/item-grid";
+import { useParams } from "react-router-dom";
+import { Frown } from "lucide-react";
 
-function HomePage() {
-  const items = [
-    {
-      id: 1,
-      title: "Shirt",
-      description: "A nice shirt to go partying...",
-      price: 10,
-      category: "Clothes",
-      imagePath:
-        "https://clinicalaveterinaria.it/wp-content/uploads/2023/11/giornata-gatti-nero.jpg",
-      isLiked: true,
-      author: {
-        name: "John Doe",
-        image:
-          "https://plus.unsplash.com/premium_photo-1664536392896-cd1743f9c02c?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHBlcnNvbnxlbnwwfHwwfHx8MA%3D%3D",
+function Favourite() {
+  const [items, setItems] = useState([]);
+  const API_USER_URL = import.meta.env.VITE_API_USER_ENDPOINT;
+  const API_ITEM_URL = import.meta.env.VITE_API_ITEM_ENDPOINT;
+  const { userId } = useParams();
+
+  useEffect(() => {
+    fetch(`${API_USER_URL}/${userId}/items?q=like`).then((response) => {
+      response.json().then((data) => {
+        setItems(data);
+      });
+    });
+  }, [API_USER_URL, userId]);
+
+  const removeFromFavorites = (itemId) => {
+    fetch(`${API_ITEM_URL}/${userId}/${itemId}/removeFromFavorite`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
-    },
-    {
-      id: 4,
-      title: "Shoes",
-      description: "A nice shoes to go partying...",
-      price: 30,
-      category: "Shoes",
-      imagePath:
-        "https://clinicalaveterinaria.it/wp-content/uploads/2023/11/giornata-gatti-nero.jpg",
-      isLiked: true,
-      author: {
-        name: "John Doe",
-        image:
-          "https://plus.unsplash.com/premium_photo-1664536392896-cd1743f9c02c?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHBlcnNvbnxlbnwwfHwwfHx8MA%3D%3D",
-      },
-    },
-    {
-      id: 5,
-      title: "Shoes",
-      description: "A nice shoes to go partying...",
-      price: 30,
-      category: "Shoes",
-      imagePath:
-        "https://clinicalaveterinaria.it/wp-content/uploads/2023/11/giornata-gatti-nero.jpg",
-      isLiked: true,
-      author: {
-        name: "John Doe",
-        image:
-          "https://plus.unsplash.com/premium_photo-1664536392896-cd1743f9c02c?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHBlcnNvbnxlbnwwfHwwfHx8MA%3D%3D",
-      },
-    },
-  ];
+    }).then(async (response) => {
+      const { items } = await response.json();
+      setItems(items);
+    });
+  };
 
   return (
     <>
       <div>
         <Header />
-        <ItemGrid items={items} />
+        {items.length == 0 ? (
+          <NoItemsFound />
+        ) : (
+          <ItemGrid items={items} handleAction={removeFromFavorites} />
+        )}
       </div>
     </>
   );
 }
 
-export default HomePage;
+export default Favourite;
+
+function NoItemsFound() {
+  return (
+    <div className="no-items-found">
+      <Frown size={60} />
+      <span>No liked items</span>
+    </div>
+  );
+}

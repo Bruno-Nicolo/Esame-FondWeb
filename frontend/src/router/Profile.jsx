@@ -1,24 +1,48 @@
 import { ItemGrid } from "../components/item-grid";
 import { Header } from "../components/header";
+import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Frown } from "lucide-react";
+import { Propic } from "../components/ProPic";
 
 export function Profile() {
-  // Items dell'utente x
-  const items = [
-    {
-      id: 1,
-      title: "Shirt",
-      description: "A nice shirt to go partying...",
-      price: 10,
-      imagePath:
-        "https://clinicalaveterinaria.it/wp-content/uploads/2023/11/giornata-gatti-nero.jpg",
-      isLiked: false,
-      author: {
-        name: "John Doe",
-        image:
-          "https://plus.unsplash.com/premium_photo-1664536392896-cd1743f9c02c?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHBlcnNvbnxlbnwwfHwwfHx8MA%3D%3D",
-      },
-    },
-  ];
+  const API_USER_URL = import.meta.env.VITE_API_USER_ENDPOINT;
+  const API_ITEM_URL = import.meta.env.VITE_API_ITEM_ENDPOINT;
+  let { userId } = useParams();
+  const [items, setItems] = useState([]);
+
+  const [user, setUser] = useState({
+    name: "",
+    surname: "",
+  });
+
+  const handleDelete = (itemId) => {
+    // cancella post e aggiorna lista
+    fetch(`${API_ITEM_URL}/${userId}/delete/${itemId}`, {
+      method: "DELETE",
+    }).then(async (response) => {
+      if (response.ok) {
+        const { items } = await response.json();
+        setItems(items);
+      }
+    });
+  };
+
+  useEffect(() => {
+    fetch(`${API_USER_URL}/${userId}`).then((response) => {
+      if (response.ok) {
+        response.json().then((data) => {
+          setUser(data);
+        });
+      }
+    });
+
+    fetch(`${API_USER_URL}/${userId}/items`).then((response) => {
+      response.json().then((data) => {
+        setItems(data);
+      });
+    });
+  }, [userId, API_USER_URL]);
 
   return (
     <>
@@ -31,12 +55,11 @@ export function Profile() {
         }}
       >
         <div className="profile-container">
-          <img src="https://plus.unsplash.com/premium_photo-1664536392896-cd1743f9c02c?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHBlcnNvbnxlbnwwfHwwfHx8MA%3D%3D" />
+          <Propic name={user.name} surname={user.surname} />
           <div style={{ flexGrow: 4 / 5 }}>
-            <h1>John Doe</h1>
-            <p style={{ color: "var(--text-color-secondary)" }}>
-              Description...
-            </p>
+            <h1>
+              {user.name} {user.surname}
+            </h1>
           </div>
           <div>
             <h2>Posted</h2>
@@ -44,8 +67,25 @@ export function Profile() {
           </div>
         </div>
 
-        <ItemGrid items={items} onProfilePage={true} />
+        {items.length == 0 ? (
+          <NoItemsFound />
+        ) : (
+          <ItemGrid
+            items={items}
+            onProfilePage={true}
+            handleAction={handleDelete}
+          />
+        )}
       </div>
     </>
+  );
+}
+
+function NoItemsFound() {
+  return (
+    <div className="no-items-found">
+      <Frown size={60} />
+      <span>No items posted yet</span>
+    </div>
   );
 }

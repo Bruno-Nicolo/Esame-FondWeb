@@ -2,19 +2,26 @@ import * as React from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import Chip from "@mui/material/Chip";
-import { SendIcon } from "lucide-react";
-import Button from "@mui/material/Button";
+import { Propic } from "./ProPic";
 
-export default function ItemDialog({
-  title,
-  description,
-  price,
-  category,
-  author,
-  image,
-}) {
+export default function ItemDialog({ item }) {
   const [open, setOpen] = React.useState(false);
-  const [email, setEmail] = React.useState("");
+
+  const API_URL = import.meta.env.VITE_API_USER_ENDPOINT;
+  const [user, setUser] = React.useState({
+    name: "",
+    surname: "",
+    email: "",
+  });
+  React.useEffect(() => {
+    fetch(`${API_URL}/${item.author}`).then((response) => {
+      if (response.ok) {
+        response.json().then((data) => {
+          setUser(data);
+        });
+      }
+    });
+  }, [item.author, API_URL]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -28,64 +35,41 @@ export default function ItemDialog({
     <React.Fragment>
       {/* Trigger del dialog */}
       <p className="announcement-title" onClick={handleClickOpen}>
-        {title}
+        {item.title}
       </p>
-      <Dialog
-        fullWidth
-        maxWidth="lg"
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="item-dialog-title"
-        aria-describedby="item-dialog-description"
-      >
+      <Dialog fullWidth maxWidth="lg" open={open} onClose={handleClose}>
         <DialogContent id="item-dialog-description">
           {/* immagina a sx */}
-          <img src={image} alt={title} />
-          {/* contenitore a dx con titolo, descrizione, prezzo, categoria */}
+          <img src={item.imageURL} alt={item.title} />
           <div style={{ width: "100%" }}>
-            {/* info item */}
+            {/* item info */}
             <div>
-              <h2>{title}</h2>
+              <h2>{item.title}</h2>
               <p
                 style={{
                   color: "var(--text-color-secondary)",
                   maxWidth: "100%",
                 }}
               >
-                {description}
+                {item.description}
               </p>
-              <Chip label={category} variant="outlined" color="primary" />
-              <h1>€{price}</h1>
+              {/* Badge categoria */}
+              <Chip label={item.category} variant="outlined" color="primary" />
+              <h1>€{item.price}</h1>
             </div>
 
             {/* info utente */}
             <div className="user-info">
-              <img src={author.image} alt={author.name} />
-              <div style={{ flexGrow: 4 / 5 }}>
-                <h3>{author.name}</h3>
-              </div>
-            </div>
+              <Propic name={user.name} surname={user.surname} />
 
-            <div style={{ marginTop: "2em" }}>
-              <label>
-                <b>Contact {author.name}:</b>
-              </label>
-              <textarea
-                placeholder="Send a message via email..."
-                style={{ marginBottom: "0.5em" }}
-                value={email}
-                onChange={(evento) => setEmail(evento.target.value)}
-              />
-              <Button
-                variant="contained"
-                onClick={() => {
-                  console.log("Email: ", email);
-                  console.log("Email inviata");
-                }}
-                endIcon={<SendIcon size={18} />}
-              >
-                Send
-              </Button>
+              <div style={{ flexGrow: 4 / 5 }}>
+                <h2>
+                  {user.name} {user.surname}
+                </h2>
+                <p style={{ color: "var(--text-color-secondary)" }}>
+                  contact at: {user.email}
+                </p>
+              </div>
             </div>
           </div>
         </DialogContent>

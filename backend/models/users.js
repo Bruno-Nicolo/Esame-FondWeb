@@ -35,13 +35,6 @@ const userSchema = new mongoose.Schema({
       ref: "Item",
     },
   ],
-  description: {
-    type: String,
-    default: "",
-  },
-  profilePicture: {
-    type: String, // URL dell'immagine del profilo
-  },
 });
 
 // Middleware pre-save per hashare la password prima di salvarla

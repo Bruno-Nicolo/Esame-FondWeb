@@ -14,6 +14,6 @@ router.get("/:userId/homepage", getHomePageItems);
 router.post("/addItem", addItem);
 router.post("/:userId/:itemId/addToFavorite", addToFavorites);
 router.post("/:userId/:itemId/removeFromFavorite", removeFromFavorites);
-router.delete("/delete/:itemId", deleteItem);
+router.delete("/:userId/delete/:itemId", deleteItem);
 
 module.exports = router;
